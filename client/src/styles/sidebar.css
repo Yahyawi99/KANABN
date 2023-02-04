@@ -1,0 +1,181 @@
+.sidebarContainer {
+    height: calc(100% - 91px);
+    width: 300px;
+    background-color: var(--color-main);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
+    position: absolute;
+    top: 90px;
+    transition: background-color .25s ease-in-out 0s, transform .25s ease-in-out .5s, border-right .25s ease-in-out 0s;
+    z-index: 1000000;
+}
+
+
+
+/* Boards */
+.boards {
+    padding: 20px 0 0 0px;
+}
+
+.boards>p {
+    color: var(--mediumGray);
+    font-weight: 600;
+    font-size: .7rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    padding: 0px 0 0 25px;
+}
+
+
+.boardsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.boardsContainer>div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--mediumGray);
+    padding: 0 0 0 25px;
+    border-radius: 0 100px 100px 0;
+    cursor: pointer;
+    transition: .25s;
+    font-size: .8rem;
+    margin: 0 25px 0 0;
+    padding: 15px 0 15px 25px;
+}
+
+.boardsContainer>div>i {
+    padding-top: 5px;
+}
+
+.boardsContainer>div>i>svg path {
+    transition: .25s;
+
+}
+
+.boardsContainer>div:hover {
+    background-color: var(--lightBlue);
+    color: var(--white);
+}
+
+.boardsContainer>div:hover>i>svg path {
+    fill: var(--white);
+}
+
+.createBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--darkBlue);
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+    margin: 15px 0 0 0;
+    padding: 0 0 0 25px;
+}
+
+.createBtn>i {
+    transform: scale(.8);
+}
+
+.createBtn>i:nth-child(1) {
+    padding-top: 5px;
+}
+
+.createBtn:hover {
+    opacity: .6;
+}
+
+
+
+/* Toggle && Hide button*/
+.sidebarContainer>div:nth-child(2) {
+    margin: 0 25px;
+}
+
+.toggleContainer {
+    background-color: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    transition: .25s;
+    padding: 15px 0;
+}
+
+.hideBtn {
+    color: var(--mediumGray);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    font-size: .9rem;
+    font-weight: 550;
+    cursor: pointer;
+    transition: .25s;
+    margin: 15px 0 30px 0;
+}
+
+.hideBtn:hover {
+    opacity: .7;
+}
+
+
+/* Open button */
+.sidebarContainer>.openbtn {
+    width: 60px;
+    height: 50px;
+    background-color: var(--darkBlue);
+    position: absolute;
+    bottom: 50px;
+    right: -60px;
+    border: none;
+    border-radius: 0 100px 100px 0;
+    cursor: pointer;
+    transition: .25s;
+    transition-delay: .2s;
+    transform-origin: left;
+}
+
+.sidebarContainer>.openbtn img {
+    margin-right: 10px;
+}
+
+.sidebarContainer>.openbtn:hover {
+    opacity: .7;
+}
+
+
+
+/* *********************************** */
+/* Javascript classes */
+.boardsContainer>.clickedBoard {
+    background-color: var(--darkBlue);
+    color: var(--white);
+    pointer-events: none;
+}
+
+.boardsContainer>.clickedBoard>i>svg path {
+    fill: var(--white)
+}
+
+
+.hideSidebar {
+    transition-delay: 0s;
+    transform: translateX(-100%);
+}
+
+.hideOpenBtn {
+    transform: scaleX(0);
+}

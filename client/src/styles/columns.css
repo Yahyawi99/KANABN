@@ -1,0 +1,82 @@
+.columnsContainer {
+    width: 100vw;
+    background-color: var(--bg);
+    display: flex;
+    overflow-x: auto;
+    position: relative;
+    cursor: move;
+    gap: 60px;
+    transition: margin-left .25s ease-in-out .5s, background-color .25s ease-in-out 0s;
+    padding: 25px;
+    margin-left: 300px;
+}
+
+/* Circle */
+.columnsContainer>.columnContainer:nth-child(1)>.name>div {
+    background-color: #DB5375;
+}
+
+.columnsContainer>.columnContainer:nth-child(2)>.name>div {
+    background-color: #56CBF9;
+}
+
+.columnsContainer>.columnContainer:nth-child(3)>.name>div {
+    background-color: #E28413;
+}
+
+.columnsContainer>.columnContainer:nth-child(4)>.name>div {
+    background-color: #F2B880;
+}
+
+.columnsContainer>.columnContainer:nth-child(5)>.name>div {
+    background-color: #06D6A0;
+}
+
+.columnsContainer>.columnContainer:nth-child(6)>.name>div {
+    background-color: #484349;
+}
+
+/* New Column Button */
+.newColumnBtn {
+    height: calc(100% - 70px);
+    min-width: 295px;
+    background: var(--mediumGrayGradient);
+    color: var(--mediumGray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: center;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: .25s;
+    cursor: pointer;
+    margin: 10px 0 0 0;
+}
+
+.newColumnBtn>i {
+    transform: scale(1.25);
+    margin-bottom: 6px;
+}
+
+.newColumnBtn>i>svg path {
+    fill: var(--mediumGray);
+    transition: .25s;
+}
+
+.newColumnBtn:hover {
+    color: var(--darkBlue);
+}
+
+.newColumnBtn:hover>i>svg path {
+    fill: var(--darkBlue);
+}
+
+/* **************************** */
+/* Javascript classes */
+.stretchColumns {
+    transition-delay: 0s;
+    margin-left: 0px;
+}

@@ -1,0 +1,26 @@
+.toggle {
+    width: 42px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    background-color: var(--darkBlue);
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 0 15px;
+}
+
+.toggle>div {
+    width: 14px;
+    height: 14px;
+    background-color: var(--white);
+    border-radius: 50%;
+    transform: translateX(24px);
+    transition: .5s;
+}
+
+
+/*****************************************
+/* Javascript */
+.slideToggle>div {
+    transform: translateX(4px);
+}

@@ -25,10 +25,10 @@ const Sidebar = () => {
           <div className="boardsContainer">
             {data &&
               data.map((board) => {
-                const { id, name } = board;
+                const { _id, name } = board;
                 return (
                   <div
-                    key={id}
+                    key={_id}
                     className={`${name === currentData.name && "clickedBoard"}`}
                     onClick={() => setCurrentData(board)}
                   >

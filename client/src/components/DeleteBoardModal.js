@@ -2,7 +2,7 @@ import React from "react";
 import { useGlobal } from "../context";
 
 const DeleteModal = () => {
-  const { setIsModalOn } = useGlobal();
+  const { setIsModalOn, deleteBoard } = useGlobal();
 
   return (
     <section className="deleteBoradContainer">
@@ -13,7 +13,7 @@ const DeleteModal = () => {
       </p>
 
       <div className="btns">
-        <button>Delete</button>
+        <button onClick={deleteBoard}>Delete</button>
         <button onClick={() => setIsModalOn(false)}>Cancel</button>
       </div>
     </section>

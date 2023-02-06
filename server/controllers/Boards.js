@@ -17,7 +17,18 @@ const updateAllBoards = async (req, res) => {
   res.status(StatusCodes.OK).json({ success: true });
 };
 
+// delete board
+const deleteBoard = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  const board = await Boards.findOneAndDelete({ _id: id });
+
+  res.status(StatusCodes.OK).json({ success: true, data: board });
+};
+
 module.exports = {
   getAllBoards,
   updateAllBoards,
+  deleteBoard,
 };

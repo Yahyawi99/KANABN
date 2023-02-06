@@ -20,7 +20,17 @@ const Provider = ({ children }) => {
   const getAllBoards = async () => {
     try {
       const res = await axios(`${process.env.REACT_APP_BASE_URL}api/v1/boards`);
-      const myData = res.data.data;
+
+      const myData = res.data.data.sort((a, b) => {
+        if (a.columns.length > b.columns.length) {
+          return -1;
+        }
+        if (a.columns.length < b.columns.length) {
+          return 1;
+        }
+
+        return 0;
+      });
 
       setData(myData);
       setCurrentData(myData[0]);
@@ -31,12 +41,25 @@ const Provider = ({ children }) => {
 
   // update all data
   const updateAllData = async (newData) => {
-    console.log(newData);
     try {
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}api/v1/boards`,
         newData
       );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // delete board
+  const deleteBoard = async () => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}api/v1/board/delete/${currentData._id}`
+      );
+
+      getAllBoards();
+      setIsModalOn(false);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +74,6 @@ const Provider = ({ children }) => {
       }
       return e;
     });
-    console.log(newData);
 
     setData(newData);
 
@@ -152,6 +174,7 @@ const Provider = ({ children }) => {
         modalNameToActivate,
         setModalNameToActivate,
         handleOndragEnd,
+        deleteBoard,
       }}
     >
       {children}

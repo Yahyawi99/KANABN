@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AppContext = React.createContext();
 const Provider = ({ children }) => {
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const [data, setData] = useState(null);
   const [currentData, setCurrentData] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -28,23 +28,38 @@ const Provider = ({ children }) => {
       console.log(error);
     }
   };
-  // ******************************************
-  // Update my data
-  const updateData = (myCurrentData, myUdpateCurrentDataColumns) => {
-    setData((prevData) => {
-      prevData = prevData.map((e) => {
-        if (e.id === myCurrentData.id) {
-          e = { ...e, columns: myUdpateCurrentDataColumns };
-          return e;
-        }
-        return e;
-      });
-      return prevData;
-    });
+
+  // update all data
+  const updateAllData = async (newData) => {
+    console.log(newData);
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/boards`,
+        newData
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // ******************************************
-  // Drag and Drop
+  // Update my data array
+  const updateData = (myUdpateCurrentDataColumns) => {
+    const newData = data.map((e) => {
+      if (e._id === currentData._id) {
+        return { ...e, columns: myUdpateCurrentDataColumns };
+      }
+      return e;
+    });
+    console.log(newData);
+
+    setData(newData);
+
+    updateAllData(newData);
+  };
+
+  // ******************************************
+  // Drag and Drop functionality
   const handleOndragEnd = (result) => {
     const { destination, source } = result;
 
@@ -90,8 +105,8 @@ const Provider = ({ children }) => {
       });
       setCurrentData({ ...currentData, columns: udpateCurrentDataColumns });
 
-      // update my data
-      updateData(currentData, udpateCurrentDataColumns);
+      // update my data array
+      updateData(udpateCurrentDataColumns);
     } else {
       const column = currentData.columns.find(
         (e) => e.id === source.droppableId

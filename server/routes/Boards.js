@@ -1,8 +1,8 @@
 const express = require("express");
-const { getAllBoards } = require("../controllers/Boards");
+const { getAllBoards, updateAllBoards } = require("../controllers/Boards");
 
 const router = express.Router();
 
-router.route("/boards").get(getAllBoards);
+router.route("/boards").get(getAllBoards).post(updateAllBoards);
 
 module.exports = router;

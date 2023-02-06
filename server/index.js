@@ -10,6 +10,7 @@ const connectDB = require("./db/connect");
 const BoardsRoutes = require("./routes/Boards");
 
 // Middlewares
+app.use(express.json());
 app.use(cors());
 
 // Routes

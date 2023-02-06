@@ -10,7 +10,6 @@ const Columns = () => {
   const {
     isSideBarOpen,
     currentData,
-    setCurrentData,
     setIsModalOn,
     setModalNameToActivate,
     handleOndragEnd,

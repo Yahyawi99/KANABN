@@ -13,79 +13,8 @@ const Columns = () => {
     setCurrentData,
     setIsModalOn,
     setModalNameToActivate,
+    handleOndragEnd,
   } = useGlobal();
-
-  const handleOndragEnd = (result) => {
-    const { destination, source } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    if (destination.droppableId !== source.droppableId) {
-      // remove the draggable task
-      const oldColumn = currentData.columns.find(
-        (e) => e.id === source.droppableId
-      );
-
-      const oldColumn_copy = JSON.parse(JSON.stringify(oldColumn));
-      const [removed] = oldColumn_copy.tasks.splice(source.index, 1);
-
-      // change the draggabale item's column
-      const newColumn = currentData.columns.find(
-        (e) => e.id === destination.droppableId
-      );
-      const newColumn_copy = JSON.parse(JSON.stringify(newColumn));
-      removed.status = newColumn_copy.name;
-      newColumn_copy.tasks.splice(destination.index, 0, removed);
-
-      // replace current data
-      const udpateCurrentDataColumns = currentData.columns.map((e) => {
-        if (e.id === oldColumn_copy.id) {
-          return (e = oldColumn_copy);
-        }
-
-        if (e.id === newColumn_copy.id) {
-          return (e = newColumn_copy);
-        }
-
-        return e;
-      });
-
-      setCurrentData({ ...currentData, columns: udpateCurrentDataColumns });
-    } else {
-      const column = currentData.columns.find(
-        (e) => e.id === source.droppableId
-      );
-
-      const newColumn = JSON.parse(JSON.stringify(column));
-
-      // remove the draggable task
-      const [removed] = newColumn.tasks.splice(source.index, 1);
-
-      // change the draggabale item's index
-      newColumn.tasks.splice(destination.index, 0, removed);
-
-      // replace current data
-      const udpateCurrentDataColumns = currentData.columns.map((e) => {
-        if (e.id === newColumn.id) {
-          return newColumn;
-        }
-        return e;
-      });
-
-      setCurrentData({ ...currentData, columns: udpateCurrentDataColumns });
-    }
-  };
-
-  // ********************************
 
   return (
     <section

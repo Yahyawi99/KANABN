@@ -1,12 +1,12 @@
 import React from "react";
 import { useGlobal } from "../context";
 
-const EditBoardModal = () => {
-  const { modalNameToActivate, currentData } = useGlobal();
+const NewColumnModal = () => {
+  const { currentData } = useGlobal();
 
   return (
-    <section className="sharedModal">
-      <h1>{modalNameToActivate}</h1>
+    <section className="sharedModal addNewColumnModal">
+      <h1>Add New Column</h1>
 
       <form noValidate>
         <div>
@@ -52,4 +52,4 @@ const EditBoardModal = () => {
   );
 };
 
-export default EditBoardModal;
+export default NewColumnModal;

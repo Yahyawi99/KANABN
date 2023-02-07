@@ -3,6 +3,8 @@ import { useGlobal } from "../context";
 // components
 import DeleteBoardModal from "./DeleteBoardModal";
 import EditBoardModal from "./EditBoardModal";
+import NewColumnModal from "./NewColumnModal";
+import CreateBoardModal from "./CreateBoardModal";
 // css
 import "../styles/Modals.css";
 
@@ -20,9 +22,11 @@ const Modals = () => {
     >
       {modalNameToActivate === "Delete board" && <DeleteBoardModal />}
 
-      {(modalNameToActivate === "Edit Board" ||
-        modalNameToActivate === "Add New Column" ||
-        modalNameToActivate === "Add New Board") && <EditBoardModal />}
+      {modalNameToActivate === "Edit Board" && <EditBoardModal />}
+
+      {modalNameToActivate === "Add New Column" && <NewColumnModal />}
+
+      {modalNameToActivate === "Add New Board" && <CreateBoardModal />}
     </section>
   );
 };

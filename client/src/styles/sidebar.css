@@ -71,7 +71,7 @@
 .createBtn {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     color: var(--darkBlue);
     background-color: transparent;
     border: none;

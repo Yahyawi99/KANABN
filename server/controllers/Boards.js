@@ -20,15 +20,33 @@ const updateAllBoards = async (req, res) => {
 // delete board
 const deleteBoard = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
 
   const board = await Boards.findOneAndDelete({ _id: id });
 
   res.status(StatusCodes.OK).json({ success: true, data: board });
 };
 
+// create new board
+const createboard = async (req, res) => {
+  const { name } = req.body;
+
+  const allBoards = await Boards.find();
+
+  const checkForMatch = allBoards.some((e) => e.name === name);
+
+  if (!checkForMatch) {
+    const newBoard = await Boards.create(req.body);
+    res.status(StatusCodes.CREATED).json({ succes: true, data: newBoard });
+  }
+
+  res
+    .status(StatusCodes.BAD_REQUEST)
+    .json({ success: true, message: "Board name already exist!" });
+};
+
 module.exports = {
   getAllBoards,
   updateAllBoards,
   deleteBoard,
+  createboard,
 };

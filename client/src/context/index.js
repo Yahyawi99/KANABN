@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const AppContext = React.createContext();
 const Provider = ({ children }) => {
@@ -10,7 +11,13 @@ const Provider = ({ children }) => {
   const [editDelete, setEditDelete] = useState(false);
   const [isModalOn, setIsModalOn] = useState(false);
   const [modalNameToActivate, setModalNameToActivate] = useState("");
+  const [newBoard, setNewBoard] = useState({
+    name: "",
+    columns: [{ _id: uuidv4(), name: "", tasks: [] }],
+  });
 
+  // ******************************************
+  // API CALLS
   // ******************************************
   // get all boards
   useEffect(() => {
@@ -60,6 +67,30 @@ const Provider = ({ children }) => {
 
       getAllBoards();
       setIsModalOn(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // create board
+  const createBoard = async (e) => {
+    e.preventDefault();
+
+    try {
+      errorStyles();
+
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/board/create`,
+        newBoard
+      );
+
+      setIsModalOn(false);
+      setNewBoard({
+        name: "",
+        columns: [{ _id: uuidv4(), name: "", tasks: [] }],
+      });
+
+      getAllBoards();
     } catch (error) {
       console.log(error);
     }
@@ -156,6 +187,69 @@ const Provider = ({ children }) => {
     }
   };
 
+  // ******************************************
+  // create new board modal
+  const addColumn = () => {
+    const newColumn = { _id: uuidv4(), name: "", tasks: [] };
+    const newColumns = newBoard.columns.concat([newColumn]);
+
+    setNewBoard({ ...newBoard, columns: newColumns });
+  };
+
+  const deleteColumnInput = (oldColumn) => {
+    setNewBoard({
+      ...newBoard,
+      columns: newBoard.columns.filter((e) => e._id !== oldColumn._id),
+    });
+  };
+
+  const errorStyles = () => {
+    const columns = [...document.querySelectorAll("#columnName")];
+    const boardName = document.querySelector("#boardName");
+    let isError = false;
+
+    if (!newBoard.name) {
+      boardName.classList.add("emptyInputError");
+      setTimeout(() => {
+        boardName.classList.remove("emptyInputError");
+      }, 2500);
+
+      const errorMsg = boardName.nextElementSibling;
+      errorMsg.style.display = "initial";
+      setTimeout(() => {
+        errorMsg.style.display = "none";
+      }, 2500);
+
+      isError = true;
+    }
+
+    columns.forEach((column, i) => {
+      if (!newBoard.columns[i].name) {
+        column.classList.add("emptyInputError");
+        setTimeout(() => {
+          column.classList.remove("emptyInputError");
+        }, 2500);
+
+        const columnContainer = column.parentElement;
+        const errorMsg = columnContainer.querySelector(".errorMsg");
+        errorMsg.style.display = "initial";
+        setTimeout(() => {
+          errorMsg.style.display = "none";
+        }, 2500);
+
+        if (columnContainer.parentElement.children.length > 1) {
+          errorMsg.style.marginRight = "25px";
+        }
+
+        isError = true;
+      }
+    });
+
+    if (isError) {
+      throw Error("All inputs are required!");
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -175,6 +269,11 @@ const Provider = ({ children }) => {
         setModalNameToActivate,
         handleOndragEnd,
         deleteBoard,
+        createBoard,
+        newBoard,
+        setNewBoard,
+        addColumn,
+        deleteColumnInput,
       }}
     >
       {children}
@@ -185,3 +284,31 @@ const Provider = ({ children }) => {
 export const useGlobal = () => useContext(AppContext);
 
 export default Provider;
+
+/*
+  const hideShowCross = (container) => {
+    const containerLength = container.children.length;
+    const firstColumnIcon = container.children[0].children[1];
+
+    if (containerLength === 1) {
+      firstColumnIcon.style.display = "none";
+    } else {
+      firstColumnIcon.style.display = "flex";
+    }
+  };
+
+  const deleteColumnInput = (e) => {
+    const columnInputContainer = e.currentTarget.parentElement;
+    const columnsContainer = document.querySelector("#columns");
+
+    const newColumnsContainer = [...columnsContainer.children].filter(
+      (e) => e !== columnInputContainer
+    );
+    columnsContainer.innerHTML = "";
+    newColumnsContainer.forEach((e) => {
+      columnsContainer.appendChild(e);
+    });
+
+    hideShowCross(columnsContainer);
+  };
+  */

@@ -90,11 +90,18 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    position: relative;
+}
+
+.modalsContainer .sharedModal form>div:nth-child(2) {
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .modalsContainer .sharedModal form>div:nth-child(2)>div>div {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .modalsContainer .sharedModal form>div:nth-child(2)>div i {
@@ -127,6 +134,11 @@
     padding: 0 0 0 15px;
 }
 
+.modalsContainer .sharedModal form>div:nth-child(2) input {
+    font-weight: 500;
+    font-size: .8rem;
+}
+
 .modalsContainer .sharedModal form input:focus {
     border-color: var(--darkBlue);
 }
@@ -149,10 +161,31 @@
     color: var(--darkBlue);
 }
 
+.modalsContainer .sharedModal .errorMsg {
+    position: absolute;
+    right: 10px;
+    font-size: .8rem;
+    color: var(--red);
+    display: none;
+}
+
+.modalsContainer .sharedModal form>div:nth-child(1) .errorMsg {
+    top: 40px;
+    right: 10px;
+}
+
 /* *********************************** */
 /* Add new column */
 .modalsContainer .addNewColumnModal form>div:nth-child(1)>input {
     opacity: .25;
     color: var(--mediumGray);
     pointer-events: none;
+}
+
+
+/* *********************************** */
+/* Javascript classes */
+.modalsContainer .sharedModal form .emptyInputError {
+    border-color: var(--red);
+    transition: 0s;
 }

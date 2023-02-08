@@ -48,17 +48,25 @@ const createboard = async (req, res) => {
 const createColumn = async (req, res) => {
   const { _id, columns } = req.body;
 
-  /*
-   {
-     $set: { "size.uom": "cm", status: "P" },
-     $currentDate: { lastModified: true }
-   }
-  */
-
   await Boards.updateOne({ _id }, { $set: { columns } });
   const Board = await Boards.findOne({ _id });
 
   res.status(StatusCodes.CREATED).json({ success: true, name: Board.name });
+};
+
+// editBoard
+const editBoard = async (req, res) => {
+  const { _id, name, columns } = req.body;
+
+  await Boards.updateOne(
+    { _id },
+    {
+      $set: { columns, name },
+    }
+  );
+  const Board = await Boards.findOne({ _id });
+
+  res.status(StatusCodes.OK).json({ success: true, name: Board.name });
 };
 
 // ********************************************
@@ -69,4 +77,5 @@ module.exports = {
   deleteBoard,
   createboard,
   createColumn,
+  editBoard,
 };

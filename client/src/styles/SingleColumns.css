@@ -39,7 +39,6 @@
     border-radius: 10px;
     border: 1px solid rgba(134, 134, 134, .1);
     box-shadow: var(--shadow);
-    transition: background-color .25s ease-in-out 0s;
     cursor: grab;
     margin-bottom: 15px;
     padding: 25px 20px 25px 25px;

@@ -1,14 +1,14 @@
 [
   {
-    "id": "63d7a9a78c06279fad952e9b",
+    "_id": "63d7a9a78c06279fad952e9b",
     "name": "Platform Launch",
     "columns": [
       {
-        "id": "a0637c9f-81d8-4fe1-9988-185b435b1089",
+        "_id": "63e37a6ed9dfddc8d3c7a2a5",
         "name": "Todo",
         "tasks": [
           {
-            "id": "21ad4cf7-8a87-4b41-89e3-eaa3eff8184c",
+            "_id": "63e37a86d9dfddc8d3c7a2a6",
             "title": "Build UI for onboarding flow",
             "description": "",
             "status": "Todo",
@@ -29,7 +29,7 @@
             ]
           },
           {
-            "id": "4e6aaf92-3ba3-432e-96f6-131cef965def",
+            "_id": "63e37aa4d9dfddc8d3c7a2a7",
             "title": "Build UI for search",
             "description": "",
             "status": "Todo",
@@ -42,7 +42,7 @@
             ]
           },
           {
-            "id": "8c50d9a4-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37abfd9dfddc8d3c7a2a8",
             "title": "Build settings UI",
             "description": "",
             "status": "Todo",
@@ -59,7 +59,7 @@
             ]
           },
           {
-            "id": "92a907b8-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37ad1d9dfddc8d3c7a2a9",
             "title": "QA and test all major user journeys",
             "description": "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
             "status": "Todo",
@@ -78,11 +78,11 @@
         ]
       },
       {
-        "id": "9a952970-a092-11ed-a8fc-0242ac120002",
+        "_id": "63e37babd9dfddc8d3c7a2b4",
         "name": "Doing",
         "tasks": [
           {
-            "id": "a051ecc2-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37bbad9dfddc8d3c7a2b5",
             "title": "Design settings and search pages",
             "description": "",
             "status": "Doing",
@@ -103,7 +103,7 @@
             ]
           },
           {
-            "id": "a806c99c-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37bc7d9dfddc8d3c7a2b6",
             "title": "Add account management endpoints",
             "description": "",
             "status": "Doing",
@@ -124,7 +124,7 @@
             ]
           },
           {
-            "id": "ad554acc-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37bd4d9dfddc8d3c7a2b7",
             "title": "Design onboarding flow",
             "description": "",
             "status": "Doing",
@@ -145,7 +145,7 @@
             ]
           },
           {
-            "id": "b1cfdd1a-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37be4d9dfddc8d3c7a2b8",
             "title": "Add search enpoints",
             "description": "",
             "status": "Doing",
@@ -162,7 +162,7 @@
             ]
           },
           {
-            "id": "b6719688-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37bf1d9dfddc8d3c7a2b9",
             "title": "Add authentication endpoints",
             "description": "",
             "status": "Doing",
@@ -179,7 +179,7 @@
             ]
           },
           {
-            "id": "bb11a354-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37bfed9dfddc8d3c7a2ba",
             "title": "Research pricing points of various competitors and trial different business models",
             "description": "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
             "status": "Doing",
@@ -202,11 +202,11 @@
         ]
       },
       {
-        "id": "c3947fa6-a092-11ed-a8fc-0242ac120002",
+        "_id": "63e37c0cd9dfddc8d3c7a2bb",
         "name": "Done",
         "tasks": [
           {
-            "id": "c88a2bbe-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37c18d9dfddc8d3c7a2bc",
             "title": "Conduct 5 wireframe tests",
             "description": "Ensure the layout continues to make sense and we have strong buy-in from potential users.",
             "status": "Done",
@@ -219,7 +219,7 @@
             ]
           },
           {
-            "id": "ce46c3a0-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37c25d9dfddc8d3c7a2bd",
             "title": "Create wireframe prototype",
             "description": "Create a greyscale clickable wireframe prototype to test our asssumptions so far.",
             "status": "Done",
@@ -232,7 +232,7 @@
             ]
           },
           {
-            "id": "d4b3a6d6-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37c3ed9dfddc8d3c7a2be",
             "title": "Review results of usability tests and iterate",
             "description": "Keep iterating through the subtasks until we're clear on the core concepts for the app.",
             "status": "Done",
@@ -253,7 +253,7 @@
             ]
           },
           {
-            "id": "d9a169e4-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37c4cd9dfddc8d3c7a2bf",
             "title": "Create paper prototypes and conduct 10 usability tests with potential customers",
             "description": "",
             "status": "Done",
@@ -270,7 +270,7 @@
             ]
           },
           {
-            "id": "dea45abe-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37c5cd9dfddc8d3c7a2c0",
             "title": "Market discovery",
             "description": "We need to define and refine our core product. Interviews will help us learn common pain points and help us define the strongest MVP.",
             "status": "Done",
@@ -283,7 +283,7 @@
             ]
           },
           {
-            "id": "e31dfb0e-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37c6cd9dfddc8d3c7a2c1",
             "title": "Competitor analysis",
             "description": "",
             "status": "Done",
@@ -300,7 +300,7 @@
             ]
           },
           {
-            "id": "e7e1eec0-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37c78d9dfddc8d3c7a2c2",
             "title": "Research the market",
             "description": "We need to get a solid overview of the market to ensure we have up-to-date estimates of market size and demand.",
             "status": "Done",
@@ -321,15 +321,15 @@
     ]
   },
   {
-    "id": "63d7a9c18c06279fad952e9c",
+    "_id": "63d7a9c18c06279fad952e9c",
     "name": "Marketing Plan",
     "columns": [
       {
-        "id": "f14fadda-a092-11ed-a8fc-0242ac120002 ",
+        "_id": "63e37af8d9dfddc8d3c7a2aa",
         "name": "Todo",
         "tasks": [
           {
-            "id": "20459eca-a092-11ed-a8fc-0242ac120002",
+            "_id": "63e37b12d9dfddc8d3c7a2ab",
             "title": "Plan Product Hunt launch",
             "description": "11",
             "status": "Todo",
@@ -362,7 +362,7 @@
             ]
           },
           {
-            "id": "80f6d986-619f-47b9-83e6-cd57dc5b542e",
+            "_id": "63e37b26d9dfddc8d3c7a2ac",
             "title": "Share on Show HN",
             "description": "",
             "status": "Todo",
@@ -383,7 +383,7 @@
             ]
           },
           {
-            "id": "6b2e681a-71cb-43d9-a49c-767e68d67a89",
+            "_id": "63e37b33d9dfddc8d3c7a2ad",
             "title": "Write launch article to publish on multiple channels",
             "description": "",
             "status": "Todo",
@@ -410,22 +410,22 @@
         ]
       },
       {
-        "id": "fcd597f0-a092-11ed-a8fc-0242ac120002",
+        "_id": "63e37b97d9dfddc8d3c7a2b3",
         "name": "Doing",
         "tasks": []
       }
     ]
   },
   {
-    "id": "63d7a9da8c06279fad952e9d",
+    "_id": "63d7a9da8c06279fad952e9d",
     "name": "Roadmap",
     "columns": [
       {
-        "id": "0e365318-a093-11ed-a8fc-0242ac120002",
+        "_id": "63e37b45d9dfddc8d3c7a2ae",
         "name": "Now",
         "tasks": [
           {
-            "id": "13cf7c1e-a093-11ed-a8fc-0242ac120002",
+            "_id": "63e37b51d9dfddc8d3c7a2af",
             "title": "Launch version one",
             "description": "",
             "status": "Now",
@@ -442,7 +442,7 @@
             ]
           },
           {
-            "id": "18cae1fe-a093-11ed-a8fc-0242ac120002",
+            "_id": "63e37b61d9dfddc8d3c7a2b0",
             "title": "Review early feedback and plan next steps for roadmap",
             "description": "Beyond the initial launch, we're keeping the initial roadmap completely empty. This meeting will help us plan out our next steps based on actual customer feedback.",
             "status": "Now",
@@ -465,12 +465,12 @@
         ]
       },
       {
-        "id": "21b6e6a0-a093-11ed-a8fc-0242ac120002",
+        "_id": "63e37b75d9dfddc8d3c7a2b1",
         "name": "Next",
         "tasks": []
       },
       {
-        "id": "28adeb02-a093-11ed-a8fc-0242ac120002",
+        "_id": "63e37b81d9dfddc8d3c7a2b2",
         "name": "Later",
         "tasks": []
       }

@@ -7,6 +7,7 @@ const BoardSchema = new mongoose.Schema({
   },
   columns: {
     type: Array,
+    required: [true, "At least one column must be added!"],
   },
 });
 

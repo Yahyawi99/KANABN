@@ -2,7 +2,13 @@ import React from "react";
 import { useGlobal } from "../context";
 
 const NewColumnModal = () => {
-  const { currentData } = useGlobal();
+  const {
+    currentData,
+    deleteColumn,
+    createNewColumn,
+    createColumn,
+    setCurrentData,
+  } = useGlobal();
 
   return (
     <section className="sharedModal addNewColumnModal">
@@ -18,14 +24,24 @@ const NewColumnModal = () => {
           <label htmlFor="columns">Columns</label>
 
           <div id="columns">
-            {currentData.columns.map((column, index) => {
+            {currentData.columns.map((column, i) => {
               const { _id, name } = column;
 
               return (
                 <div key={_id}>
-                  <input type="text" value={name} />
+                  <input
+                    type="text"
+                    className="newColumnInput"
+                    value={name}
+                    onChange={(e) => {
+                      currentData.columns[i].name = e.currentTarget.value;
+                      setCurrentData({
+                        ...currentData,
+                      });
+                    }}
+                  />
                   {[...currentData.columns].length > 1 && (
-                    <i>
+                    <i onClick={() => deleteColumn(column)}>
                       <svg
                         width="15"
                         height="15"
@@ -38,15 +54,22 @@ const NewColumnModal = () => {
                       </svg>
                     </i>
                   )}
+                  <p className="errorMsg">Required!</p>
                 </div>
               );
             })}
           </div>
 
-          <button>+ New Column</button>
+          {[...currentData.columns].length < 6 && (
+            <button onClick={createNewColumn} type="button">
+              + New Column
+            </button>
+          )}
         </div>
 
-        <button>Save Changes</button>
+        <button type="submit" onClick={(e) => createColumn(e)}>
+          Save Changes
+        </button>
       </form>
     </section>
   );

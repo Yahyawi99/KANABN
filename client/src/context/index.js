@@ -19,12 +19,13 @@ const Provider = ({ children }) => {
   // ******************************************
   // API CALLS
   // ******************************************
+  // ******************************************
   // get all boards
   useEffect(() => {
     getAllBoards();
   }, []);
 
-  const getAllBoards = async () => {
+  const getAllBoards = async (boardName) => {
     try {
       const res = await axios(`${process.env.REACT_APP_BASE_URL}api/v1/boards`);
 
@@ -40,7 +41,12 @@ const Provider = ({ children }) => {
       });
 
       setData(myData);
-      setCurrentData(myData[0]);
+
+      if (boardName) {
+        setCurrentData(myData.find((e) => e.name === boardName));
+      } else {
+        setCurrentData(myData[0]);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +71,7 @@ const Provider = ({ children }) => {
         `${process.env.REACT_APP_BASE_URL}api/v1/board/delete/${currentData._id}`
       );
 
-      getAllBoards();
+      await getAllBoards();
       setIsModalOn(false);
     } catch (error) {
       console.log(error);
@@ -77,24 +83,47 @@ const Provider = ({ children }) => {
     e.preventDefault();
 
     try {
-      errorStyles();
+      newBoarderrors();
 
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}api/v1/board/create`,
         newBoard
       );
 
-      setIsModalOn(false);
+      await getAllBoards();
       setNewBoard({
         name: "",
         columns: [{ _id: uuidv4(), name: "", tasks: [] }],
       });
-
-      getAllBoards();
+      setIsModalOn(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // create new column
+  const createColumn = async (e) => {
+    e.preventDefault();
+
+    try {
+      newColumnErrors();
+
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/column/create`,
+        currentData
+      );
+      const boardName = res.data.name;
+
+      await getAllBoards(boardName);
+      setIsModalOn(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ********************************************
+  // ********************************************
+  // ********************************************
 
   // ******************************************
   // Update my data array
@@ -130,7 +159,7 @@ const Provider = ({ children }) => {
     if (destination.droppableId !== source.droppableId) {
       // remove the draggable task
       const oldColumn = currentData.columns.find(
-        (e) => e.id === source.droppableId
+        (e) => e._id === source.droppableId
       );
 
       const oldColumn_copy = JSON.parse(JSON.stringify(oldColumn));
@@ -138,7 +167,7 @@ const Provider = ({ children }) => {
 
       // change the draggabale item's column
       const newColumn = currentData.columns.find(
-        (e) => e.id === destination.droppableId
+        (e) => e._id === destination.droppableId
       );
       const newColumn_copy = JSON.parse(JSON.stringify(newColumn));
       removed.status = newColumn_copy.name;
@@ -146,11 +175,11 @@ const Provider = ({ children }) => {
 
       // replace current data
       const udpateCurrentDataColumns = currentData.columns.map((e) => {
-        if (e.id === oldColumn_copy.id) {
+        if (e._id === oldColumn_copy._id) {
           return (e = oldColumn_copy);
         }
 
-        if (e.id === newColumn_copy.id) {
+        if (e._id === newColumn_copy._id) {
           return (e = newColumn_copy);
         }
 
@@ -162,7 +191,7 @@ const Provider = ({ children }) => {
       updateData(udpateCurrentDataColumns);
     } else {
       const column = currentData.columns.find(
-        (e) => e.id === source.droppableId
+        (e) => e._id === source.droppableId
       );
 
       const newColumn = JSON.parse(JSON.stringify(column));
@@ -175,7 +204,7 @@ const Provider = ({ children }) => {
 
       // replace current data
       const udpateCurrentDataColumns = currentData.columns.map((e) => {
-        if (e.id === newColumn.id) {
+        if (e._id === newColumn._id) {
           return newColumn;
         }
         return e;
@@ -203,7 +232,7 @@ const Provider = ({ children }) => {
     });
   };
 
-  const errorStyles = () => {
+  const newBoarderrors = () => {
     const columns = [...document.querySelectorAll("#columnName")];
     const boardName = document.querySelector("#boardName");
     let isError = false;
@@ -239,6 +268,8 @@ const Provider = ({ children }) => {
 
         if (columnContainer.parentElement.children.length > 1) {
           errorMsg.style.marginRight = "25px";
+        } else {
+          errorMsg.style.marginRight = "0px";
         }
 
         isError = true;
@@ -249,6 +280,60 @@ const Provider = ({ children }) => {
       throw Error("All inputs are required!");
     }
   };
+
+  // ******************************************
+  // create new column modal
+  const deleteColumn = (column) => {
+    const newColumnsArr = currentData.columns.filter(
+      (e) => e._id !== column._id
+    );
+
+    setCurrentData({ ...currentData, columns: newColumnsArr });
+  };
+
+  const createNewColumn = () => {
+    const newColumn = { _id: uuidv4(), name: "", tasks: [] };
+
+    setCurrentData({
+      ...currentData,
+      columns: currentData.columns.concat([newColumn]),
+    });
+  };
+
+  const newColumnErrors = () => {
+    const Inputs = [...document.querySelectorAll(".newColumnInput")];
+    let isError = false;
+
+    Inputs.forEach((input) => {
+      if (!input.value) {
+        input.classList.add("emptyInputError");
+
+        setTimeout(() => {
+          input.classList.remove("emptyInputError");
+        }, 2500);
+
+        const errorMsg = input.parentElement.querySelector(".errorMsg");
+        errorMsg.style.display = "initial";
+        setTimeout(() => {
+          errorMsg.style.display = "none";
+        }, 2500);
+        if (input.parentElement.parentElement.children.length > 1) {
+          errorMsg.style.marginRight = "25px";
+        } else {
+          errorMsg.style.marginRight = "0px";
+        }
+
+        isError = true;
+      }
+    });
+
+    if (isError) {
+      throw Error("All inputs are required!");
+    }
+  };
+
+  // ********************************************
+  // Edit board modal
 
   return (
     <AppContext.Provider
@@ -274,6 +359,9 @@ const Provider = ({ children }) => {
         setNewBoard,
         addColumn,
         deleteColumnInput,
+        deleteColumn,
+        createNewColumn,
+        createColumn,
       }}
     >
       {children}
@@ -284,31 +372,3 @@ const Provider = ({ children }) => {
 export const useGlobal = () => useContext(AppContext);
 
 export default Provider;
-
-/*
-  const hideShowCross = (container) => {
-    const containerLength = container.children.length;
-    const firstColumnIcon = container.children[0].children[1];
-
-    if (containerLength === 1) {
-      firstColumnIcon.style.display = "none";
-    } else {
-      firstColumnIcon.style.display = "flex";
-    }
-  };
-
-  const deleteColumnInput = (e) => {
-    const columnInputContainer = e.currentTarget.parentElement;
-    const columnsContainer = document.querySelector("#columns");
-
-    const newColumnsContainer = [...columnsContainer.children].filter(
-      (e) => e !== columnInputContainer
-    );
-    columnsContainer.innerHTML = "";
-    newColumnsContainer.forEach((e) => {
-      columnsContainer.appendChild(e);
-    });
-
-    hideShowCross(columnsContainer);
-  };
-  */

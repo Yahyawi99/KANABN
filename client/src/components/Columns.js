@@ -24,11 +24,12 @@ const Columns = () => {
         placeholder={{}}
       >
         {currentData &&
-          currentData.columns.map((column) => {
-            const { id } = column;
-            return <SingleColumns key={id} columnData={column} />;
+          currentData.columns.map((column, i) => {
+            const { _id } = column;
+            return <SingleColumns key={_id} columnData={column} />;
           })}
-        {currentData && currentData.columns.length <= 6 && (
+
+        {currentData && currentData.columns.length < 6 && (
           <button
             className="newColumnBtn"
             onClick={() => {

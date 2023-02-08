@@ -2,13 +2,13 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 const Task = ({ task, name, index }) => {
-  const { id, title, subtasks } = task;
+  const { _id, title, subtasks } = task;
 
   let isCompletedTasks = subtasks.filter((e) => e.isCompleted);
 
   return (
     task.status === name && (
-      <Draggable draggableId={id} index={index} key={id}>
+      <Draggable draggableId={_id} index={index} key={_id}>
         {(provided) => (
           <div
             {...provided.draggableProps}

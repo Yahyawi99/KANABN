@@ -44,9 +44,29 @@ const createboard = async (req, res) => {
     .json({ success: true, message: "Board name already exist!" });
 };
 
+// create new column
+const createColumn = async (req, res) => {
+  const { _id, columns } = req.body;
+
+  /*
+   {
+     $set: { "size.uom": "cm", status: "P" },
+     $currentDate: { lastModified: true }
+   }
+  */
+
+  await Boards.updateOne({ _id }, { $set: { columns } });
+  const Board = await Boards.findOne({ _id });
+
+  res.status(StatusCodes.CREATED).json({ success: true, name: Board.name });
+};
+
+// ********************************************
+// ********************************************
 module.exports = {
   getAllBoards,
   updateAllBoards,
   deleteBoard,
   createboard,
+  createColumn,
 };

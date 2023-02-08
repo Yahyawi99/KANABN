@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGlobal } from "../context";
 
 const EditBoardModal = () => {
   const { modalNameToActivate, currentData } = useGlobal();
+  const [editedBoard, setEditedBoard] = useState({ ...currentData });
 
   return (
     <section className="sharedModal">
@@ -11,7 +12,14 @@ const EditBoardModal = () => {
       <form noValidate>
         <div>
           <label htmlFor="boardName">Name</label>
-          <input type="text" id="boardName" value={currentData.name} />
+          <input
+            type="text"
+            id="boardName"
+            value={editedBoard.name}
+            onChange={(e) =>
+              setEditedBoard({ ...editedBoard, name: e.currentTarget.value })
+            }
+          />
         </div>
 
         <div>
@@ -24,7 +32,7 @@ const EditBoardModal = () => {
               return (
                 <div key={_id}>
                   <input type="text" value={name} />
-                  {[...currentData.columns].length > 1 && (
+                  {[...editedBoard.columns].length > 1 && (
                     <i>
                       <svg
                         width="15"

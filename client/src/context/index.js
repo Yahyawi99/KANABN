@@ -83,7 +83,7 @@ const Provider = ({ children }) => {
     e.preventDefault();
 
     try {
-      newBoarderrors();
+      newBoard_editBoard_errors();
 
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}api/v1/board/create`,
@@ -91,6 +91,30 @@ const Provider = ({ children }) => {
       );
 
       await getAllBoards();
+      setNewBoard({
+        name: "",
+        columns: [{ _id: uuidv4(), name: "", tasks: [] }],
+      });
+      setIsModalOn(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // edit board
+  const editBoard = async (e, data) => {
+    e.preventDefault();
+
+    try {
+      newBoard_editBoard_errors();
+
+      const res = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/board/edit`,
+        data
+      );
+      const boardName = res.data.name;
+
+      await getAllBoards(boardName);
       setNewBoard({
         name: "",
         columns: [{ _id: uuidv4(), name: "", tasks: [] }],
@@ -126,7 +150,7 @@ const Provider = ({ children }) => {
   // ********************************************
 
   // ******************************************
-  // Update my data array
+  // Drag and Drop functionality
   const updateData = (myUdpateCurrentDataColumns) => {
     const newData = data.map((e) => {
       if (e._id === currentData._id) {
@@ -140,8 +164,6 @@ const Provider = ({ children }) => {
     updateAllData(newData);
   };
 
-  // ******************************************
-  // Drag and Drop functionality
   const handleOndragEnd = (result) => {
     const { destination, source } = result;
 
@@ -217,27 +239,13 @@ const Provider = ({ children }) => {
   };
 
   // ******************************************
-  // create new board modal
-  const addColumn = () => {
-    const newColumn = { _id: uuidv4(), name: "", tasks: [] };
-    const newColumns = newBoard.columns.concat([newColumn]);
-
-    setNewBoard({ ...newBoard, columns: newColumns });
-  };
-
-  const deleteColumnInput = (oldColumn) => {
-    setNewBoard({
-      ...newBoard,
-      columns: newBoard.columns.filter((e) => e._id !== oldColumn._id),
-    });
-  };
-
-  const newBoarderrors = () => {
+  // Moadl Errors
+  const newBoard_editBoard_errors = () => {
     const columns = [...document.querySelectorAll("#columnName")];
     const boardName = document.querySelector("#boardName");
     let isError = false;
 
-    if (!newBoard.name) {
+    if (!boardName.value) {
       boardName.classList.add("emptyInputError");
       setTimeout(() => {
         boardName.classList.remove("emptyInputError");
@@ -253,7 +261,7 @@ const Provider = ({ children }) => {
     }
 
     columns.forEach((column, i) => {
-      if (!newBoard.columns[i].name) {
+      if (!column.value) {
         column.classList.add("emptyInputError");
         setTimeout(() => {
           column.classList.remove("emptyInputError");
@@ -279,25 +287,6 @@ const Provider = ({ children }) => {
     if (isError) {
       throw Error("All inputs are required!");
     }
-  };
-
-  // ******************************************
-  // create new column modal
-  const deleteColumn = (column) => {
-    const newColumnsArr = currentData.columns.filter(
-      (e) => e._id !== column._id
-    );
-
-    setCurrentData({ ...currentData, columns: newColumnsArr });
-  };
-
-  const createNewColumn = () => {
-    const newColumn = { _id: uuidv4(), name: "", tasks: [] };
-
-    setCurrentData({
-      ...currentData,
-      columns: currentData.columns.concat([newColumn]),
-    });
   };
 
   const newColumnErrors = () => {
@@ -332,8 +321,16 @@ const Provider = ({ children }) => {
     }
   };
 
-  // ********************************************
-  // Edit board modal
+  // ******************************************
+  // create new column modal
+  const createNewColumn = () => {
+    const newColumn = { _id: uuidv4(), name: "", tasks: [] };
+
+    setCurrentData({
+      ...currentData,
+      columns: currentData.columns.concat([newColumn]),
+    });
+  };
 
   return (
     <AppContext.Provider
@@ -357,11 +354,9 @@ const Provider = ({ children }) => {
         createBoard,
         newBoard,
         setNewBoard,
-        addColumn,
-        deleteColumnInput,
-        deleteColumn,
         createNewColumn,
         createColumn,
+        editBoard,
       }}
     >
       {children}

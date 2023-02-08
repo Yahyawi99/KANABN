@@ -2,13 +2,8 @@ import React from "react";
 import { useGlobal } from "../context";
 
 const NewColumnModal = () => {
-  const {
-    currentData,
-    deleteColumn,
-    createNewColumn,
-    createColumn,
-    setCurrentData,
-  } = useGlobal();
+  const { currentData, createNewColumn, createColumn, setCurrentData } =
+    useGlobal();
 
   return (
     <section className="sharedModal addNewColumnModal">
@@ -41,7 +36,16 @@ const NewColumnModal = () => {
                     }}
                   />
                   {[...currentData.columns].length > 1 && (
-                    <i onClick={() => deleteColumn(column)}>
+                    <i
+                      onClick={() => {
+                        setCurrentData({
+                          ...currentData,
+                          columns: currentData.columns.filter(
+                            (e) => e._id !== column._id
+                          ),
+                        });
+                      }}
+                    >
                       <svg
                         width="15"
                         height="15"

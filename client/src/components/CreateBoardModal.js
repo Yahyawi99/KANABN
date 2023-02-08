@@ -1,9 +1,9 @@
 import React from "react";
 import { useGlobal } from "../context";
+import { v4 as uuidv4 } from "uuid";
 
 const CreateBoardModal = () => {
-  const { createBoard, newBoard, addColumn, deleteColumnInput, setNewBoard } =
-    useGlobal();
+  const { createBoard, newBoard, setNewBoard } = useGlobal();
 
   return (
     <section className="sharedModal">
@@ -43,7 +43,16 @@ const CreateBoardModal = () => {
                     }}
                   />
                   {newBoard.columns.length > 1 && (
-                    <i onClick={() => deleteColumnInput(column)}>
+                    <i
+                      onClick={() => {
+                        setNewBoard({
+                          ...newBoard,
+                          columns: newBoard.columns.filter(
+                            (e) => e._id !== column._id
+                          ),
+                        });
+                      }}
+                    >
                       <svg
                         width="15"
                         height="15"
@@ -62,7 +71,15 @@ const CreateBoardModal = () => {
             })}
           </div>
 
-          <button type="button" onClick={addColumn}>
+          <button
+            type="button"
+            onClick={() => {
+              const newColumn = { _id: uuidv4(), name: "", tasks: [] };
+              const newColumns = newBoard.columns.concat([newColumn]);
+
+              setNewBoard({ ...newBoard, columns: newColumns });
+            }}
+          >
             + New Column
           </button>
         </div>

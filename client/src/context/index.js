@@ -53,11 +53,11 @@ const Provider = ({ children }) => {
   };
 
   // update all data
-  const updateAllData = async (newData) => {
+  const updateBoard = async (editedBoard) => {
     try {
       await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/v1/boards`,
-        newData
+        `${process.env.REACT_APP_BASE_URL}api/v1/board/${currentData._id}`,
+        editedBoard
       );
     } catch (error) {
       console.log(error);
@@ -126,7 +126,7 @@ const Provider = ({ children }) => {
   };
 
   // create new column
-  const createColumn = async (e) => {
+  const createColumn = async (e, newData) => {
     e.preventDefault();
 
     try {
@@ -134,7 +134,7 @@ const Provider = ({ children }) => {
 
       const res = await axios.post(
         `${process.env.REACT_APP_BASE_URL}api/v1/column/create`,
-        currentData
+        newData
       );
       const boardName = res.data.name;
 
@@ -161,7 +161,7 @@ const Provider = ({ children }) => {
 
     setData(newData);
 
-    updateAllData(newData);
+    updateBoard({ ...currentData, columns: myUdpateCurrentDataColumns });
   };
 
   const handleOndragEnd = (result) => {
@@ -231,10 +231,11 @@ const Provider = ({ children }) => {
         }
         return e;
       });
+
       setCurrentData({ ...currentData, columns: udpateCurrentDataColumns });
 
       // update my data
-      updateData(currentData, udpateCurrentDataColumns);
+      updateData(udpateCurrentDataColumns);
     }
   };
 
@@ -321,17 +322,6 @@ const Provider = ({ children }) => {
     }
   };
 
-  // ******************************************
-  // create new column modal
-  const createNewColumn = () => {
-    const newColumn = { _id: uuidv4(), name: "", tasks: [] };
-
-    setCurrentData({
-      ...currentData,
-      columns: currentData.columns.concat([newColumn]),
-    });
-  };
-
   return (
     <AppContext.Provider
       value={{
@@ -354,7 +344,6 @@ const Provider = ({ children }) => {
         createBoard,
         newBoard,
         setNewBoard,
-        createNewColumn,
         createColumn,
         editBoard,
       }}

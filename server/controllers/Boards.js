@@ -8,13 +8,13 @@ const getAllBoards = async (req, res) => {
 };
 
 // update all boards
-const updateAllBoards = async (req, res) => {
-  const { body: newData } = req;
+const updateBoard = async (req, res) => {
+  const { id } = req.params;
 
-  await Boards.deleteMany();
-  await Boards.create(newData);
+  await Boards.replaceOne({ _id: id }, req.body);
+  const board = await Boards.findOne({ _id: id });
 
-  res.status(StatusCodes.OK).json({ success: true });
+  res.status(StatusCodes.OK).json({ success: true, data: board });
 };
 
 // delete board
@@ -58,10 +58,18 @@ const createColumn = async (req, res) => {
 const editBoard = async (req, res) => {
   const { _id, name, columns } = req.body;
 
+  const editedColumns = columns.map((column) => {
+    column.tasks.forEach((task) => {
+      task.status = column.name;
+    });
+
+    return column;
+  });
+
   await Boards.updateOne(
     { _id },
     {
-      $set: { columns, name },
+      $set: { columns: editedColumns, name },
     }
   );
   const Board = await Boards.findOne({ _id });
@@ -73,7 +81,7 @@ const editBoard = async (req, res) => {
 // ********************************************
 module.exports = {
   getAllBoards,
-  updateAllBoards,
+  updateBoard,
   deleteBoard,
   createboard,
   createColumn,

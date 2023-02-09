@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   getAllBoards,
-  updateAllBoards,
+  updateBoard,
   deleteBoard,
   createboard,
   createColumn,
@@ -10,10 +10,11 @@ const {
 
 const router = express.Router();
 
-router.route("/boards").get(getAllBoards).post(updateAllBoards);
+router.route("/boards").get(getAllBoards);
 router.route("/board/create").post(createboard);
 router.route("/board/edit").put(editBoard);
 router.route("/board/delete/:id").delete(deleteBoard);
+router.route("/board/:id").post(updateBoard);
 
 router.route("/column/create").post(createColumn);
 

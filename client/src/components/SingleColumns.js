@@ -13,21 +13,24 @@ const SingleColumns = ({ columnData }) => {
       <h5 className="name">
         <div className="circle"></div>
         <p>
-          {name.toLocaleUpperCase()} ({tasks.length})
+          {name.toLocaleUpperCase()} ({tasks ? tasks.length : 0})
         </p>
       </h5>
 
       <Droppable droppableId={_id}>
         {(provided) => (
           <div
-            className={`subTasksContainer ${tasks.length === 0 && "noTasks"}`}
+            className={`subTasksContainer ${
+              tasks && tasks.length === 0 && "noTasks"
+            }`}
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {tasks.map((task, i) => {
-              const { _id } = task;
-              return <Task key={_id} task={task} name={name} index={i} />;
-            })}
+            {tasks &&
+              tasks.map((task, i) => {
+                const { _id } = task;
+                return <Task key={_id} task={task} name={name} index={i} />;
+              })}
 
             <div style={{ display: "none" }}>{provided.placeholder}</div>
           </div>

@@ -16,7 +16,7 @@ const EditBoardModal = () => {
           <input
             type="text"
             id="boardName"
-            value={editedBoard.name}
+            value={editBoard.name}
             onChange={(e) =>
               setEditedBoard({ ...editedBoard, name: e.currentTarget.value })
             }
@@ -39,6 +39,7 @@ const EditBoardModal = () => {
                     value={name}
                     onChange={(e) => {
                       editedBoard.columns[i].name = e.currentTarget.value;
+
                       setEditedBoard({
                         ...editedBoard,
                       });

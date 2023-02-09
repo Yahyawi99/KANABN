@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGlobal } from "../context";
+import { v4 as uuidv4 } from "uuid";
 
 const NewColumnModal = () => {
-  const { currentData, createNewColumn, createColumn, setCurrentData } =
-    useGlobal();
+  const { currentData, createColumn } = useGlobal();
+  const [editedBoard, setEditedBoard] = useState(currentData);
 
   return (
     <section className="sharedModal addNewColumnModal">
@@ -19,7 +20,7 @@ const NewColumnModal = () => {
           <label htmlFor="columns">Columns</label>
 
           <div id="columns">
-            {currentData.columns.map((column, i) => {
+            {editedBoard.columns.map((column, i) => {
               const { _id, name } = column;
 
               return (
@@ -29,18 +30,18 @@ const NewColumnModal = () => {
                     className="newColumnInput"
                     value={name}
                     onChange={(e) => {
-                      currentData.columns[i].name = e.currentTarget.value;
-                      setCurrentData({
-                        ...currentData,
+                      editedBoard.columns[i].name = e.currentTarget.value;
+                      setEditedBoard({
+                        ...editedBoard,
                       });
                     }}
                   />
-                  {[...currentData.columns].length > 1 && (
+                  {[...editedBoard.columns].length > 1 && (
                     <i
                       onClick={() => {
-                        setCurrentData({
-                          ...currentData,
-                          columns: currentData.columns.filter(
+                        setEditedBoard({
+                          ...editedBoard,
+                          columns: editedBoard.columns.filter(
                             (e) => e._id !== column._id
                           ),
                         });
@@ -64,14 +65,24 @@ const NewColumnModal = () => {
             })}
           </div>
 
-          {[...currentData.columns].length < 6 && (
-            <button onClick={createNewColumn} type="button">
+          {[...editedBoard.columns].length < 6 && (
+            <button
+              onClick={() => {
+                const newColumn = { _id: uuidv4(), name: "", tasks: [] };
+
+                setEditedBoard({
+                  ...editedBoard,
+                  columns: editedBoard.columns.concat([newColumn]),
+                });
+              }}
+              type="button"
+            >
               + New Column
             </button>
           )}
         </div>
 
-        <button type="submit" onClick={(e) => createColumn(e)}>
+        <button type="submit" onClick={(e) => createColumn(e, editedBoard)}>
           Save Changes
         </button>
       </form>

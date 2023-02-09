@@ -6,7 +6,7 @@
     position: relative;
     cursor: move;
     gap: 60px;
-    transition: margin-left .25s ease-in-out .5s, background-color .25s ease-in-out 0s;
+    transition: margin-left .25s ease-in-out .5s;
     padding: 25px;
     margin-left: 300px;
 }

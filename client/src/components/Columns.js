@@ -24,7 +24,7 @@ const Columns = () => {
         placeholder={{}}
       >
         {currentData &&
-          currentData.columns.map((column, i) => {
+          currentData.columns.map((column) => {
             const { _id } = column;
             return <SingleColumns key={_id} columnData={column} />;
           })}

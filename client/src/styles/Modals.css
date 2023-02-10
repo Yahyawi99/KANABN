@@ -13,7 +13,7 @@
 .modalsContainer>section {
     width: 95%;
     max-width: 425px;
-    background-color: var(--modal-back);
+    background-color: var(--color-main);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -30,7 +30,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: .25s;
-    padding: 15px 0px;
+    padding: 12px 0px;
 }
 
 .modalsContainer button:hover {
@@ -122,7 +122,7 @@
 
 .modalsContainer .sharedModal form input {
     width: calc(100% - 20px);
-    height: 40px;
+    height: 35px;
     background-color: transparent;
     color: var(--color-title);
     border-radius: 5px;
@@ -174,6 +174,83 @@
     right: 10px;
 }
 
+.modalsContainer .sharedModal .dropDownContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.modalsContainer .sharedModal .dropDownContainer>p {
+    color: var(--mediumGray);
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.modalsContainer .sharedModal .dropDownContainer>div {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+}
+
+.modalsContainer .sharedModal .dropDownContainer input {
+    width: 100%;
+    height: 35px;
+    background-color: transparent;
+    color: var(--color-title);
+    border: 2px solid var(--mediumGrayOpacity);
+    border-radius: 5px;
+    outline: none;
+    transform: .25s;
+    cursor: pointer;
+    padding: 0 0 0 15px;
+}
+
+.modalsContainer .sharedModal .dropDownContainer input:focus {
+    border-color: var(--darkBlue);
+}
+
+.modalsContainer .sharedModal .dropDownContainer i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+}
+
+.modalsContainer .sharedModal .dropDownContainer i svg {
+    transition: transform .25s ease-in-out;
+    transform-origin: center;
+}
+
+.modalsContainer .sharedModal .dropDown {
+    width: 100%;
+    background-color: var(--bg);
+    color: var(--mediumGray);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: calc(100% + 5px);
+    border-radius: 5px;
+    z-index: 1;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: .25s;
+    padding: 20px 0;
+}
+
+.modalsContainer .sharedModal .dropDown>p {
+    margin-left: 15px;
+    font-size: .8rem;
+    transition: .25s;
+}
+
+.modalsContainer .sharedModal .dropDown>p:hover {
+    color: var(--color-title);
+    font-weight: 600;
+}
+
 /* *********************************** */
 /* Add new column */
 .modalsContainer .addNewColumnModal form>div:nth-child(1)>input {
@@ -184,8 +261,201 @@
 
 
 /* *********************************** */
+/* Task modal */
+.modalsContainer .taskModal {
+    gap: 15px;
+    position: relative;
+}
+
+.modalsContainer .taskModal>div {
+    width: 100%;
+}
+
+.modalsContainer .taskModal>div:nth-child(1) {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalsContainer .taskModal>div:nth-child(1) h1 {
+    color: var(--color-title);
+    font-size: 1.1rem;
+}
+
+.modalsContainer .taskModal>div:nth-child(1) button {
+    flex: initial;
+    background-color: transparent;
+    flex-direction: column;
+    border-radius: 100px;
+    padding: 10px 10px;
+}
+
+.modalsContainer .taskModal>div:nth-child(1) button p {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--mediumGray);
+    margin-bottom: 3px;
+}
+
+.modalsContainer .taskModal>div:nth-child(1) button:hover {
+    background-color: var(--bg);
+}
+
+.modalsContainer .taskModal .taskDescription {
+    color: var(--mediumGray);
+    font-size: .8rem;
+    line-height: 22px;
+    margin-bottom: 15px;
+}
+
+.modalsContainer .taskModal .subtaskContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.modalsContainer .taskModal>div:nth-child(4)>p {
+    color: var(--mediumGray);
+    font-size: .8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.modalsContainer .taskModal .subtaskContainer>div {
+    width: 100%;
+    background-color: var(--bg);
+    color: var(--color-title);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 5px;
+    font-size: .8rem;
+    font-weight: 550;
+    cursor: pointer;
+    padding: 15px 10px;
+}
+
+.modalsContainer .taskModal .subtaskContainer>div:hover {
+    background-color: rgba(128, 124, 228, 0.3);
+}
+
+.modalsContainer .taskModal .subtaskContainer .completedTask {
+    text-decoration: line-through;
+    color: grey;
+}
+
+.modalsContainer .taskModal .modal {
+    width: 125px;
+    background-color: var(--modal-back);
+    color: var(--mediumGray);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: absolute;
+    right: -50px;
+    top: 70px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    font-size: .9rem;
+    padding: 20px 50px 20px 25px;
+}
+
+.modalsContainer .taskModal .modal>p {
+    cursor: pointer;
+    transition: .25s;
+}
+
+.modalsContainer .taskModal .modal>p:hover {
+    opacity: .5;
+}
+
+.modalsContainer .taskModal .modal>p:nth-child(2) {
+    color: var(--red);
+}
+
+
+/* *********************************** */
+/* Edit & Add task modal */
+.modalsContainer .editAddTask {
+    padding: 20px 25px;
+}
+
+.modalsContainer .editAddTask>h1 {
+    color: var(--color-title);
+    font-size: 1.25rem;
+    margin-bottom: 5px;
+}
+
+.modalsContainer .editAddTask>form input {
+    min-height: 35px;
+    font-weight: 500;
+    font-size: .8rem;
+    flex: 1;
+}
+
+.modalsContainer .editAddTask textarea {
+    background-color: transparent;
+    color: var(--color-title);
+    border-radius: 5px;
+    border: 2px solid var(--mediumGrayOpacity);
+    font-size: .8rem;
+    font-weight: 500;
+    font-family: inherit;
+    outline: none;
+    transition: .25s;
+    resize: none;
+    padding: 5px 0 0 15px;
+}
+
+.modalsContainer .editAddTask textarea:focus {
+    border-color: var(--darkBlue);
+}
+
+.modalsContainer .editAddTask>form>div:nth-child(4)>div {
+    max-height: 90px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.modalsContainer .editAddTask>form>div:nth-child(4)>button {
+    color: var(--darkBlue);
+}
+
+.modalsContainer .editAddTask>form>div:nth-child(4) span {
+    display: flex;
+    align-items: center;
+}
+
+.modalsContainer .editAddTask>form>div:nth-child(4) span>i {
+    margin: 0 1px 0 10px;
+}
+
+.modalsContainer .editAddTask .dropDownContainer {
+    margin-bottom: 0px;
+}
+
+/* **************************************************** */
+/* **************************************************** */
+/* **************************************************** */
 /* Javascript classes */
 .modalsContainer .sharedModal form .emptyInputError {
     border-color: var(--red);
     transition: 0s;
+}
+
+.modalsContainer .sharedModal .showDropDown {
+    transform: scaleY(1);
+}
+
+.modalsContainer .sharedModal .dropDownContainer .rotate {
+    transform: rotateZ(180deg);
 }

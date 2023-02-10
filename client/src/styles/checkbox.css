@@ -1,0 +1,28 @@
+.checkbox {
+    width: fit-content;
+    min-width: 15px;
+    min-height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-main);
+    border: 1px solid var(--mediumGrayOpacity);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.checkbox>i {
+    display: none;
+}
+
+
+/* ************************* */
+/* Javascript */
+.checked {
+    background-color: var(--darkBlue);
+    border-color: transparent;
+}
+
+.checked>i {
+    display: flex;
+}

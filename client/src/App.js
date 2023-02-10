@@ -27,7 +27,7 @@ function App() {
       "--color-main": "#fff",
       "--color-title": "#000",
       "--color-border": "#E4EBFA",
-      "--shadow": "0 0 5px 2px #E4EBFA",
+      "--shadow": "0 0 5px 0px #E4EBFA",
       "--modal-back": "#fff",
     };
   }

@@ -77,6 +77,35 @@ const editBoard = async (req, res) => {
   res.status(StatusCodes.OK).json({ success: true, name: Board.name });
 };
 
+// create new task
+const addNewTask = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const board = await Boards.findOne({ _id: id });
+
+  const newColumns = board.columns.map((e) => {
+    if (e.name === status) {
+      e.tasks.push(req.body);
+      return e;
+    }
+    return e;
+  });
+
+  await Boards.updateOne(
+    { _id: id },
+    {
+      $set: { columns: newColumns },
+    }
+  );
+
+  const newBoard = await Boards.findOne({ _id: id });
+
+  res
+    .status(StatusCodes.CREATED)
+    .json({ success: true, data: newBoard, name: newBoard.name });
+};
+
 // ********************************************
 // ********************************************
 module.exports = {
@@ -86,4 +115,5 @@ module.exports = {
   createboard,
   createColumn,
   editBoard,
+  addNewTask,
 };

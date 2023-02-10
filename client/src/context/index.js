@@ -15,6 +15,7 @@ const Provider = ({ children }) => {
     name: "",
     columns: [{ _id: uuidv4(), name: "", tasks: [] }],
   });
+  const [clickedTask, setClickedTask] = useState("");
 
   // ******************************************
   // API CALLS
@@ -139,6 +140,28 @@ const Provider = ({ children }) => {
       const boardName = res.data.name;
 
       await getAllBoards(boardName);
+      setIsModalOn(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // create new task
+  const addNewTask = async (e, newTaskData) => {
+    e.preventDefault();
+
+    try {
+      newTaskErrors();
+
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/create/${currentData._id}`,
+        newTaskData
+      );
+      const boardName = res.data.name;
+
+      await getAllBoards(boardName);
+
+      setCurrentData(res.data.data);
       setIsModalOn(false);
     } catch (error) {
       console.log(error);
@@ -322,6 +345,50 @@ const Provider = ({ children }) => {
     }
   };
 
+  const newTaskErrors = () => {
+    const title = document.querySelector("#title");
+    const subtasks = [...document.querySelectorAll("#subtask")];
+    let isError = false;
+
+    if (!title.value) {
+      title.classList.add("emptyInputError");
+      setTimeout(() => {
+        title.classList.remove("emptyInputError");
+      }, 2500);
+
+      const errorMsg = title.nextElementSibling;
+      errorMsg.style.display = "initial";
+      setTimeout(() => {
+        errorMsg.style.display = "none";
+      }, 2500);
+
+      isError = true;
+    }
+
+    subtasks.forEach((subtask, i) => {
+      if (!subtask.value) {
+        subtask.classList.add("emptyInputError");
+        setTimeout(() => {
+          subtask.classList.remove("emptyInputError");
+        }, 2500);
+
+        const subtaskContainer = subtask.parentElement;
+        const errorMsg = subtaskContainer.querySelector(".errorMsg");
+        errorMsg.style.display = "initial";
+        setTimeout(() => {
+          errorMsg.style.display = "none";
+        }, 2500);
+        errorMsg.style.marginRight = "25px";
+
+        isError = true;
+      }
+    });
+
+    if (isError) {
+      throw Error("All inputs are required!");
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -346,6 +413,9 @@ const Provider = ({ children }) => {
         setNewBoard,
         createColumn,
         editBoard,
+        clickedTask,
+        setClickedTask,
+        addNewTask,
       }}
     >
       {children}

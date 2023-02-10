@@ -27,7 +27,14 @@ const Header = () => {
         <h1 className="title">{currentData && currentData.name}</h1>
 
         <div className="btns">
-          <button className="addBtn">
+          <button
+            className="addBtn"
+            onClick={() => {
+              setModalNameToActivate("Add New Task");
+              setEditDelete(false);
+              setIsModalOn(true);
+            }}
+          >
             <img src="/assets/icon-add-task-mobile.svg" alt="plus" />
             <p>Add New Task</p>
           </button>

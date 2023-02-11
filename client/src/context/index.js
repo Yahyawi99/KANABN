@@ -16,6 +16,7 @@ const Provider = ({ children }) => {
     columns: [{ _id: uuidv4(), name: "", tasks: [] }],
   });
   const [clickedTask, setClickedTask] = useState("");
+  const [taskToEditOrCreate, setTaskToEditOrCreate] = useState(null);
 
   // ******************************************
   // API CALLS
@@ -161,7 +162,68 @@ const Provider = ({ children }) => {
 
       await getAllBoards(boardName);
 
-      setCurrentData(res.data.data);
+      setIsModalOn(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // update task status
+  const updateTaskStatus = async (taskID, columnID, myTask) => {
+    try {
+      const res = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/update/${currentData._id}`,
+        { taskID, columnID, myTask }
+      );
+      const boardName = res.data.name;
+
+      await getAllBoards(boardName);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // update task state
+  const updateTaskState = async (taskID, columnName, mySubTask) => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/subtask/update/${currentData._id}`,
+        { taskID, columnName, mySubTask }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Edit task
+  const editTask = async (e, editedTask) => {
+    e.preventDefault();
+
+    try {
+      newTaskErrors();
+
+      const res = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/edit/${currentData._id}`,
+        { editedTask, columnName: editedTask.status }
+      );
+      const boardName = res.data.name;
+
+      await getAllBoards(boardName);
+      setIsModalOn(false);
+    } catch (error) {}
+  };
+
+  // delete task
+  const deleteTask = async (taskID, columnName) => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/subtask/delete/${currentData._id}`,
+        { taskID, columnName }
+      );
+      const boardName = res.data.name;
+
+      await getAllBoards(boardName);
+
       setIsModalOn(false);
     } catch (error) {
       console.log(error);
@@ -416,6 +478,12 @@ const Provider = ({ children }) => {
         clickedTask,
         setClickedTask,
         addNewTask,
+        taskToEditOrCreate,
+        setTaskToEditOrCreate,
+        editTask,
+        updateTaskStatus,
+        updateTaskState,
+        deleteTask,
       }}
     >
       {children}

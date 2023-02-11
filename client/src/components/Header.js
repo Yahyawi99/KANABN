@@ -1,5 +1,6 @@
 import React from "react";
 import { useGlobal } from "../context";
+import { v4 as uuidv4 } from "uuid";
 // css
 import "../styles/header.css";
 
@@ -11,6 +12,7 @@ const Header = () => {
     setEditDelete,
     setIsModalOn,
     setModalNameToActivate,
+    setTaskToEditOrCreate,
   } = useGlobal();
 
   return (
@@ -33,6 +35,13 @@ const Header = () => {
               setModalNameToActivate("Add New Task");
               setEditDelete(false);
               setIsModalOn(true);
+              setTaskToEditOrCreate({
+                _id: uuidv4(),
+                title: "",
+                description: "",
+                status: currentData.columns[0].name,
+                subtasks: [{ title: "", isCompleted: false }],
+              });
             }}
           >
             <img src="/assets/icon-add-task-mobile.svg" alt="plus" />

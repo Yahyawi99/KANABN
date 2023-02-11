@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useGlobal } from "../context";
-import { v4 as uuidv4 } from "uuid";
 
-const AddTaskModel = () => {
-  const { modalNameToActivate, currentData, addNewTask } = useGlobal();
+const AddEditTaskModel = () => {
+  const {
+    modalNameToActivate,
+    currentData,
+    addNewTask,
+    taskToEditOrCreate,
+    editTask,
+  } = useGlobal();
   const [isDropDownOn, setIsDropDownOn] = useState(false);
-  const [newTask, setNewTask] = useState({
-    _id: uuidv4(),
-    title: "",
-    description: "",
-    status: currentData.columns[0].name,
-    subtasks: [{ title: "", isCompleted: false }],
-  });
+
+  const [newTask, setNewTask] = useState(taskToEditOrCreate);
 
   return (
     <section className="sharedModal editAddTask">
@@ -144,12 +144,18 @@ const AddTaskModel = () => {
           )}
         </div>
 
-        <button type="submit" onClick={(e) => addNewTask(e, newTask)}>
-          Create Task
-        </button>
+        {modalNameToActivate === "Add New Task" ? (
+          <button type="submit" onClick={(e) => addNewTask(e, newTask)}>
+            Create Task
+          </button>
+        ) : (
+          <button type="submit" onClick={(e) => editTask(e, newTask)}>
+            Save Changes
+          </button>
+        )}
       </form>
     </section>
   );
 };
 
-export default AddTaskModel;
+export default AddEditTaskModel;

@@ -6,7 +6,7 @@ import EditBoardModal from "./EditBoardModal";
 import NewColumnModal from "./NewColumnModal";
 import CreateBoardModal from "./CreateBoardModal";
 import TaskModel from "./TaskModel";
-import AddTaskModel from "./AddTaskModel";
+import AddEditTaskModel from "./AddEditTaskModel";
 // css
 import "../styles/Modals.css";
 
@@ -22,7 +22,8 @@ const Modals = () => {
         }
       }}
     >
-      {modalNameToActivate === "Delete board" && <DeleteBoardModal />}
+      {(modalNameToActivate === "Delete board" ||
+        modalNameToActivate === "Delete Task") && <DeleteBoardModal />}
 
       {modalNameToActivate === "Edit Board" && <EditBoardModal />}
 
@@ -32,7 +33,8 @@ const Modals = () => {
 
       {modalNameToActivate === "Task" && <TaskModel />}
 
-      {modalNameToActivate === "Add New Task" && <AddTaskModel />}
+      {(modalNameToActivate === "Add New Task" ||
+        modalNameToActivate === "Edit Task") && <AddEditTaskModel />}
     </section>
   );
 };

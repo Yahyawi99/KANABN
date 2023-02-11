@@ -26,7 +26,7 @@
     flex: 1;
     border-radius: 100px;
     border: none;
-    font-size: .8rem;
+    font-size: .75rem;
     font-weight: 600;
     cursor: pointer;
     transition: .25s;
@@ -40,10 +40,6 @@
 
 /* ***************************************** */
 /* Delete Board modal */
-.modalsContainer .deleteBoradContainer {
-    line-height: 22px;
-}
-
 .modalsContainer .deleteBoradContainer>h1 {
     color: var(--red);
 }
@@ -51,6 +47,8 @@
 .modalsContainer .deleteBoradContainer>p {
     color: var(--mediumGray);
     word-spacing: 4px;
+    line-height: 22px;
+    font-size: .9rem;
 }
 
 .modalsContainer .deleteBoradContainer>.btns {
@@ -237,6 +235,7 @@
     transform-origin: top;
     transform: scaleY(0);
     transition: .25s;
+    box-shadow: var(--shadow);
     padding: 20px 0;
 }
 
@@ -433,6 +432,7 @@
 .modalsContainer .editAddTask>form>div:nth-child(4) span {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .modalsContainer .editAddTask>form>div:nth-child(4) span>i {

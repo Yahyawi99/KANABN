@@ -19,10 +19,7 @@ const Columns = () => {
     <section
       className={`columnsContainer ${isSideBarOpen || "stretchColumns"}`}
     >
-      <DragDropContext
-        onDragEnd={(result) => handleOndragEnd(result)}
-        placeholder={{}}
-      >
+      <DragDropContext onDragEnd={(result) => handleOndragEnd(result)}>
         {currentData &&
           currentData.columns.map((column) => {
             const { _id } = column;

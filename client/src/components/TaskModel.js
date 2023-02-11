@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGlobal } from "../context";
 // components
 import Checkbox from "./Checkbox";
 
 const TaskModel = () => {
-  const { clickedTask, currentData, setModalNameToActivate } = useGlobal();
-  const { title, description, subtasks } = clickedTask;
+  const {
+    clickedTask,
+    currentData,
+    setModalNameToActivate,
+    setTaskToEditOrCreate,
+    updateTaskStatus,
+    setClickedTask,
+    updateTaskState,
+  } = useGlobal();
 
+  const { _id: taskID, title, description, subtasks, status } = clickedTask;
   const completedTasks = subtasks.filter((subtask) => subtask.isCompleted);
+
+  const [showEditDelete, setShowEditDelete] = useState(false);
+  const [isDropDownOn, setIsDropDownOn] = useState(false);
+  const [dropDownTxt, setDropDownTxt] = useState(status);
 
   return (
     <section className="sharedModal taskModal">
       <div>
         <h1>{title}</h1>
 
-        <button type="button">
+        <button
+          type="button"
+          onClick={() => setShowEditDelete(!showEditDelete)}
+        >
           <p></p>
           <p></p>
           <p></p>
@@ -27,8 +42,9 @@ const TaskModel = () => {
 
       <div className="dropDownContainer">
         <p>Current Status</p>
-        <div>
-          <input type="text" readOnly value={"Todo"} />
+
+        <div onClick={() => setIsDropDownOn(!isDropDownOn)}>
+          <input type="text" value={dropDownTxt} readOnly />
           <i>
             <svg width="10" height="7" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -40,12 +56,22 @@ const TaskModel = () => {
             </svg>
           </i>
 
-          {/* <div className="dropDown">
+          <div className={`dropDown ${isDropDownOn && "showDropDown"}`}>
             {currentData.columns.map((column) => {
-              const { name } = column;
-              return <p>{name}</p>;
+              const { _id: columnID, name } = column;
+              return (
+                <p
+                  key={columnID}
+                  onClick={async () => {
+                    await updateTaskStatus(taskID, columnID, clickedTask);
+                    setDropDownTxt(name);
+                  }}
+                >
+                  {name}
+                </p>
+              );
             })}
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -53,12 +79,21 @@ const TaskModel = () => {
         <p>
           Subtasks ({completedTasks.length} of {subtasks.length})
         </p>
+
         <div className="subtaskContainer">
-          {subtasks.map((subtask) => {
+          {subtasks.map((subtask, i) => {
             const { isCompleted, title } = subtask;
 
             return (
-              <div className={`${isCompleted && "completedTask"}`}>
+              <div
+                key={i}
+                className={`${isCompleted && "completedTask"}`}
+                onClick={async () => {
+                  await updateTaskState(taskID, status, title);
+                  subtask.isCompleted = !isCompleted;
+                  setClickedTask({ ...clickedTask });
+                }}
+              >
                 <Checkbox completed={isCompleted} />
                 <p>{title}</p>
               </div>
@@ -67,13 +102,21 @@ const TaskModel = () => {
         </div>
       </div>
 
-      <div
-        className="modal"
-        onClick={() => setModalNameToActivate("Edit Task")}
-      >
-        <p>Edit Task</p>
-        <p>Delete Task</p>
-      </div>
+      {showEditDelete && (
+        <div className="modal">
+          <p
+            onClick={() => {
+              setModalNameToActivate("Edit Task");
+              setTaskToEditOrCreate(clickedTask);
+            }}
+          >
+            Edit Task
+          </p>
+          <p onClick={() => setModalNameToActivate("Delete Task")}>
+            Delete Task
+          </p>
+        </div>
+      )}
     </section>
   );
 };

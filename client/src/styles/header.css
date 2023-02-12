@@ -39,10 +39,6 @@
     padding: 0 25px;
 }
 
-.header>div:nth-child(2) img {
-    display: none;
-}
-
 .header>div:nth-child(2) h1 {
     color: var(--color-title);
     display: flex;

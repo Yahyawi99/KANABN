@@ -92,4 +92,8 @@
     .columnsContainer {
         margin-left: 0px;
     }
+
+    .columnsContainer {
+        padding: 25px 10px;
+    }
 }

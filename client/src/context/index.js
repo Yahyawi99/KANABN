@@ -30,7 +30,7 @@ const Provider = ({ children }) => {
 
   const getAllBoards = async (boardName) => {
     try {
-      const res = await axios(`${process.env.REACT_APP_BASE_URL}api/v1/boards`);
+      const res = await axios(`/api/v1/boards`);
 
       const myData = res.data.data.sort((a, b) => {
         if (a.columns.length > b.columns.length) {
@@ -58,10 +58,7 @@ const Provider = ({ children }) => {
   // update all data
   const updateBoard = async (editedBoard) => {
     try {
-      await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/v1/board/${currentData._id}`,
-        editedBoard
-      );
+      await axios.post(`/api/v1/board/${currentData._id}`, editedBoard);
     } catch (error) {
       console.log(error);
     }
@@ -70,9 +67,7 @@ const Provider = ({ children }) => {
   // delete board
   const deleteBoard = async () => {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_BASE_URL}api/v1/board/delete/${currentData._id}`
-      );
+      await axios.delete(`/api/v1/board/delete/${currentData._id}`);
 
       await getAllBoards();
       setIsModalOn(false);
@@ -88,10 +83,7 @@ const Provider = ({ children }) => {
     try {
       newBoard_editBoard_errors();
 
-      await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/v1/board/create`,
-        newBoard
-      );
+      await axios.post(`/api/v1/board/create`, newBoard);
 
       await getAllBoards();
       setNewBoard({
@@ -111,10 +103,7 @@ const Provider = ({ children }) => {
     try {
       newBoard_editBoard_errors();
 
-      const res = await axios.put(
-        `${process.env.REACT_APP_BASE_URL}api/v1/board/edit`,
-        data
-      );
+      const res = await axios.put(`/api/v1/board/edit`, data);
       const boardName = res.data.name;
 
       await getAllBoards(boardName);
@@ -135,10 +124,7 @@ const Provider = ({ children }) => {
     try {
       newColumnErrors();
 
-      const res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/v1/column/create`,
-        newData
-      );
+      const res = await axios.post(`/api/v1/column/create`, newData);
       const boardName = res.data.name;
 
       await getAllBoards(boardName);
@@ -156,7 +142,7 @@ const Provider = ({ children }) => {
       newTaskErrors();
 
       const res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/create/${currentData._id}`,
+        `/api/v1/column/task/create/${currentData._id}`,
         newTaskData
       );
       const boardName = res.data.name;
@@ -173,7 +159,7 @@ const Provider = ({ children }) => {
   const updateTaskStatus = async (taskID, columnID, myTask) => {
     try {
       const res = await axios.put(
-        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/update/${currentData._id}`,
+        `/api/v1/column/task/update/${currentData._id}`,
         { taskID, columnID, myTask }
       );
       const boardName = res.data.name;
@@ -187,10 +173,11 @@ const Provider = ({ children }) => {
   // update task state
   const updateTaskState = async (taskID, columnName, mySubTask) => {
     try {
-      await axios.put(
-        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/subtask/update/${currentData._id}`,
-        { taskID, columnName, mySubTask }
-      );
+      await axios.put(`/api/v1/column/task/subtask/update/${currentData._id}`, {
+        taskID,
+        columnName,
+        mySubTask,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -204,7 +191,7 @@ const Provider = ({ children }) => {
       newTaskErrors();
 
       const res = await axios.put(
-        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/edit/${currentData._id}`,
+        `/api/v1/column/task/edit/${currentData._id}`,
         { editedTask, columnName: editedTask.status }
       );
       const boardName = res.data.name;
@@ -218,7 +205,7 @@ const Provider = ({ children }) => {
   const deleteTask = async (taskID, columnName) => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/v1/column/task/subtask/delete/${currentData._id}`,
+        `/api/v1/column/task/subtask/delete/${currentData._id}`,
         { taskID, columnName }
       );
       const boardName = res.data.name;

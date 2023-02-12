@@ -47,10 +47,13 @@
     font-size: 1.5rem;
 }
 
+.header>div:nth-child(2) h1 img {
+    display: none;
+}
+
 .header>div:nth-child(2) .arrow-down {
     transition: .25s;
     margin-top: 7px;
-    display: none;
 }
 
 
@@ -212,7 +215,7 @@
         transform: scale(1);
     }
 
-    .header>div:nth-child(2) .arrow-down {
-        display: flex;
+    .header>div:nth-child(2) h1 img {
+        display: initial;
     }
 }

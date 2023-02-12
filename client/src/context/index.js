@@ -17,6 +17,7 @@ const Provider = ({ children }) => {
   });
   const [clickedTask, setClickedTask] = useState("");
   const [taskToEditOrCreate, setTaskToEditOrCreate] = useState(null);
+  const [mobileNavBar, setMobileNavBar] = useState(false);
 
   // ******************************************
   // API CALLS
@@ -484,6 +485,8 @@ const Provider = ({ children }) => {
         updateTaskStatus,
         updateTaskState,
         deleteTask,
+        mobileNavBar,
+        setMobileNavBar,
       }}
     >
       {children}

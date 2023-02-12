@@ -74,9 +74,22 @@
     fill: var(--darkBlue);
 }
 
-/* **************************** */
+/* *********************************** */
+/* *********************************** */
+/* *********************************** */
 /* Javascript classes */
 .stretchColumns {
     transition-delay: 0s;
     margin-left: 0px;
+}
+
+
+/* *********************************** */
+/* *********************************** */
+/* *********************************** */
+/* media query */
+@media screen and (min-width:0px) and (max-width:500px) {
+    .columnsContainer {
+        margin-left: 0px;
+    }
 }

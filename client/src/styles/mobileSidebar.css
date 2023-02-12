@@ -1,0 +1,46 @@
+.mobileSidebar {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, .6);
+    display: none;
+    z-index: 1000000;
+}
+
+
+/* *********************************** */
+/* *********************************** */
+/* *********************************** */
+/* media query */
+@media screen and (min-width:0px) and (max-width:500px) {
+    .mobileSidebar {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .mobileSidebar .sidebarContainer {
+        display: initial;
+    }
+
+    .mobileSidebar .openbtn {
+        display: none;
+    }
+
+    .mobileSidebar .hideBtn {
+        display: none;
+    }
+
+    .mobileSidebar .sidebarContainer {
+        height: fit-content;
+        gap: 5px;
+        top: 75px;
+        border-radius: 10px;
+        padding: 0px 0px 25px 0;
+    }
+
+    .mobileSidebar .toggleContainer {
+        margin: 25px 0 0 0;
+    }
+}

@@ -31,9 +31,11 @@
 
 
 .boardsContainer {
+    max-height: calc(100vh - 350px);
     display: flex;
     flex-direction: column;
     gap: 5px;
+    overflow: auto;
 }
 
 .boardsContainer>div {
@@ -177,4 +179,14 @@
 
 .hideOpenBtn {
     transform: scaleX(0);
+}
+
+/* *********************************** */
+/* *********************************** */
+/* *********************************** */
+/* media query */
+@media screen and (min-width:0px) and (max-width:500px) {
+    .sidebarContainer {
+        display: none;
+    }
 }

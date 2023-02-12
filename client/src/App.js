@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Columns from "./components/Columns";
 import Modals from "./components/Modals";
+import MobileSidebar from "./components/MobileSidebar";
 // css
 import "./styles/app.css";
 
@@ -38,6 +39,8 @@ function App() {
 
       <section>
         <Sidebar />
+
+        <MobileSidebar />
 
         <Columns />
       </section>

@@ -13,6 +13,8 @@ const Header = () => {
     setIsModalOn,
     setModalNameToActivate,
     setTaskToEditOrCreate,
+    setMobileNavBar,
+    mobileNavBar,
   } = useGlobal();
 
   return (
@@ -25,59 +27,72 @@ const Header = () => {
         )}
       </div>
 
-      <div>
-        <h1 className="title">{currentData && currentData.name}</h1>
+      {currentData && (
+        <div>
+          <h1 className="title">
+            <img src="/assets/logo-mobile.svg" alt="logo" />
 
-        <div className="btns">
-          <button
-            className="addBtn"
-            onClick={() => {
-              setModalNameToActivate("Add New Task");
-              setEditDelete(false);
-              setIsModalOn(true);
-              setTaskToEditOrCreate({
-                _id: uuidv4(),
-                title: "",
-                description: "",
-                status: currentData.columns[0].name,
-                subtasks: [{ title: "", isCompleted: false }],
-              });
-            }}
-          >
-            <img src="/assets/icon-add-task-mobile.svg" alt="plus" />
-            <p>Add New Task</p>
-          </button>
+            {currentData.name}
 
-          <button onClick={() => setEditDelete(!editDelete)}>
-            <p></p>
-            <p></p>
-            <p></p>
-          </button>
+            <img
+              onClick={() => setMobileNavBar(true)}
+              src="/assets/icon-chevron-down.svg"
+              alt="arrow-down"
+              className={`arrow-down ${mobileNavBar && "rotateArrow"}`}
+            />
+          </h1>
 
-          {editDelete && (
-            <div className="modal">
-              <p
-                onClick={() => {
-                  setEditDelete(false);
-                  setIsModalOn(true);
-                  setModalNameToActivate("Edit Board");
-                }}
-              >
-                Edit Board
-              </p>
-              <p
-                onClick={() => {
-                  setIsModalOn(true);
-                  setEditDelete(false);
-                  setModalNameToActivate("Delete board");
-                }}
-              >
-                Delete Board
-              </p>
-            </div>
-          )}
+          <div className="btns">
+            <button
+              className="addBtn"
+              onClick={() => {
+                setModalNameToActivate("Add New Task");
+                setEditDelete(false);
+                setIsModalOn(true);
+                setTaskToEditOrCreate({
+                  _id: uuidv4(),
+                  title: "",
+                  description: "",
+                  status: currentData.columns[0].name,
+                  subtasks: [{ title: "", isCompleted: false }],
+                });
+              }}
+            >
+              <img src="/assets/icon-add-task-mobile.svg" alt="plus" />
+              <p>Add New Task</p>
+            </button>
+
+            <button onClick={() => setEditDelete(!editDelete)}>
+              <p></p>
+              <p></p>
+              <p></p>
+            </button>
+
+            {editDelete && (
+              <div className="modal">
+                <p
+                  onClick={() => {
+                    setEditDelete(false);
+                    setIsModalOn(true);
+                    setModalNameToActivate("Edit Board");
+                  }}
+                >
+                  Edit Board
+                </p>
+                <p
+                  onClick={() => {
+                    setIsModalOn(true);
+                    setEditDelete(false);
+                    setModalNameToActivate("Delete board");
+                  }}
+                >
+                  Delete Board
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };

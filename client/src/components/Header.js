@@ -27,21 +27,24 @@ const Header = () => {
         )}
       </div>
 
-      {currentData && (
-        <div>
-          <h1 className="title">
-            <img src="/assets/logo-mobile.svg" alt="logo" />
+      <div>
+        <h1 className="title">
+          <img src="/assets/logo-mobile.svg" alt="logo" />
 
-            {currentData.name}
+          {currentData && (
+            <>
+              {currentData.name}
+              <img
+                onClick={() => setMobileNavBar(true)}
+                src="/assets/icon-chevron-down.svg"
+                alt="arrow-down"
+                className={`arrow-down ${mobileNavBar && "rotateArrow"}`}
+              />
+            </>
+          )}
+        </h1>
 
-            <img
-              onClick={() => setMobileNavBar(true)}
-              src="/assets/icon-chevron-down.svg"
-              alt="arrow-down"
-              className={`arrow-down ${mobileNavBar && "rotateArrow"}`}
-            />
-          </h1>
-
+        {currentData && (
           <div className="btns">
             <button
               className="addBtn"
@@ -91,8 +94,8 @@ const Header = () => {
               </div>
             )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 };

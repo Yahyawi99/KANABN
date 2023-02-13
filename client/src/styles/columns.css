@@ -87,6 +87,7 @@
 
 .createBoardBtn p {
     color: var(--color-title);
+    text-align: center;
 }
 
 .createBoardBtn button {

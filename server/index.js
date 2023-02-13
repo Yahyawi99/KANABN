@@ -17,7 +17,7 @@ app.use(cors());
 // Routes
 app.use("/api/v1", BoardsRoutes);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);

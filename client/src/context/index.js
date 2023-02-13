@@ -18,6 +18,8 @@ const Provider = ({ children }) => {
   const [clickedTask, setClickedTask] = useState("");
   const [taskToEditOrCreate, setTaskToEditOrCreate] = useState(null);
   const [mobileNavBar, setMobileNavBar] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingState, setLoadingState] = useState("loading");
 
   // ******************************************
   // API CALLS
@@ -30,6 +32,9 @@ const Provider = ({ children }) => {
 
   const getAllBoards = async (boardName) => {
     try {
+      setLoadingState("loading");
+      setLoading(true);
+
       const res = await axios(`/api/v1/boards`);
 
       const myData = res.data.data.sort((a, b) => {
@@ -43,6 +48,9 @@ const Provider = ({ children }) => {
         return 0;
       });
 
+      setLoadingState("done");
+      setLoading(false);
+
       setData(myData);
 
       if (boardName) {
@@ -51,7 +59,8 @@ const Provider = ({ children }) => {
         setCurrentData(myData[0]);
       }
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
@@ -60,19 +69,27 @@ const Provider = ({ children }) => {
     try {
       await axios.post(`/api/v1/board/${currentData._id}`, editedBoard);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
   // delete board
   const deleteBoard = async () => {
     try {
+      setLoadingState("loading");
+      setLoading(true);
+
       await axios.delete(`/api/v1/board/delete/${currentData._id}`);
+
+      setLoadingState("done");
+      setLoading(false);
 
       await getAllBoards();
       setIsModalOn(false);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
@@ -83,7 +100,13 @@ const Provider = ({ children }) => {
     try {
       newBoard_editBoard_errors();
 
+      setLoadingState("loading");
+      setLoading(true);
+
       await axios.post(`/api/v1/board/create`, newBoard);
+
+      setLoadingState("done");
+      setLoading(false);
 
       await getAllBoards();
       setNewBoard({
@@ -92,7 +115,8 @@ const Provider = ({ children }) => {
       });
       setIsModalOn(false);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
@@ -103,8 +127,14 @@ const Provider = ({ children }) => {
     try {
       newBoard_editBoard_errors();
 
+      setLoadingState("loading");
+      setLoading(true);
+
       const res = await axios.put(`/api/v1/board/edit`, data);
       const boardName = res.data.name;
+
+      setLoadingState("done");
+      setLoading(false);
 
       await getAllBoards(boardName);
       setNewBoard({
@@ -113,7 +143,8 @@ const Provider = ({ children }) => {
       });
       setIsModalOn(false);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
@@ -124,13 +155,20 @@ const Provider = ({ children }) => {
     try {
       newColumnErrors();
 
+      setLoadingState("loading");
+      setLoading(true);
+
       const res = await axios.post(`/api/v1/column/create`, newData);
       const boardName = res.data.name;
+
+      setLoadingState("done");
+      setLoading(false);
 
       await getAllBoards(boardName);
       setIsModalOn(false);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
@@ -141,11 +179,17 @@ const Provider = ({ children }) => {
     try {
       newTaskErrors();
 
+      setLoadingState("loading");
+      setLoading(true);
+
       const res = await axios.post(
         `/api/v1/column/task/create/${currentData._id}`,
         newTaskData
       );
       const boardName = res.data.name;
+
+      setLoadingState("done");
+      setLoading(false);
 
       await getAllBoards(boardName);
 
@@ -158,28 +202,42 @@ const Provider = ({ children }) => {
   // update task status
   const updateTaskStatus = async (taskID, columnID, myTask) => {
     try {
+      setLoadingState("loading");
+      setLoading(true);
+
       const res = await axios.put(
         `/api/v1/column/task/update/${currentData._id}`,
         { taskID, columnID, myTask }
       );
       const boardName = res.data.name;
 
+      setLoadingState("done");
+      setLoading(false);
+
       await getAllBoards(boardName);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
   // update task state
   const updateTaskState = async (taskID, columnName, mySubTask) => {
     try {
+      setLoadingState("loading");
+      setLoading(true);
+
       await axios.put(`/api/v1/column/task/subtask/update/${currentData._id}`, {
         taskID,
         columnName,
         mySubTask,
       });
+
+      setLoadingState("done");
+      setLoading(false);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
@@ -190,31 +248,47 @@ const Provider = ({ children }) => {
     try {
       newTaskErrors();
 
+      setLoadingState("loading");
+      setLoading(true);
+
       const res = await axios.put(
         `/api/v1/column/task/edit/${currentData._id}`,
         { editedTask, columnName: editedTask.status }
       );
       const boardName = res.data.name;
 
+      setLoadingState("done");
+      setLoading(false);
+
       await getAllBoards(boardName);
       setIsModalOn(false);
-    } catch (error) {}
+    } catch (error) {
+      setLoadingState("error");
+      setLoading(false);
+    }
   };
 
   // delete task
   const deleteTask = async (taskID, columnName) => {
     try {
+      setLoadingState("loading");
+      setLoading(true);
+
       const res = await axios.post(
         `/api/v1/column/task/subtask/delete/${currentData._id}`,
         { taskID, columnName }
       );
       const boardName = res.data.name;
 
+      setLoadingState("done");
+      setLoading(false);
+
       await getAllBoards(boardName);
 
       setIsModalOn(false);
     } catch (error) {
-      console.log(error);
+      setLoadingState("error");
+      setLoading(false);
     }
   };
 
@@ -474,6 +548,8 @@ const Provider = ({ children }) => {
         deleteTask,
         mobileNavBar,
         setMobileNavBar,
+        loading,
+        loadingState,
       }}
     >
       {children}

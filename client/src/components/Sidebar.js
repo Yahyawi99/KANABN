@@ -14,6 +14,7 @@ const Sidebar = () => {
     setCurrentData,
     setIsModalOn,
     setModalNameToActivate,
+    loading,
   } = useGlobal();
 
   return (
@@ -50,7 +51,7 @@ const Sidebar = () => {
               })}
           </div>
 
-          {currentData && (
+          {!loading && (
             <button
               className="createBtn"
               onClick={() => {

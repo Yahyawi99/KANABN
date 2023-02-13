@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import Columns from "./components/Columns";
 import Modals from "./components/Modals";
 import MobileSidebar from "./components/MobileSidebar";
+import Loader from "./components/Loader";
 // css
 import "./styles/app.css";
 
@@ -46,6 +47,7 @@ function App() {
       </section>
 
       {isModalOn && <Modals />}
+      <Loader />
     </main>
   );
 }

@@ -1,0 +1,42 @@
+.loader {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    z-index: 1000000000000;
+    transition: .25s;
+    transition-delay: 1s;
+}
+
+.loader h1 {
+    min-width: 225px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    font-size: .8rem;
+    transition: .25s ease-in-out 0s;
+    letter-spacing: 1px;
+    padding: 5px 0px;
+    position: absolute;
+}
+
+.error {
+    background-color: var(--red);
+}
+
+.loading {
+    background-color: #E28413;
+}
+
+.done {
+    background-color: #06D6A0;
+}
+
+/* *********************************** */
+/* *********************************** */
+/* *********************************** */
+/* Javascript */
+.showloader {
+    top: 35px;
+    transition-delay: 0s;
+}

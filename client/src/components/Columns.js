@@ -16,7 +16,7 @@ const Columns = () => {
     data,
   } = useGlobal();
 
-  if (data) {
+  if (data && data.length) {
     return (
       <section
         className={`columnsContainer ${isSideBarOpen || "stretchColumns"}`}

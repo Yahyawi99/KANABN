@@ -14,6 +14,7 @@ const Columns = () => {
     setModalNameToActivate,
     handleOndragEnd,
     data,
+    loading,
   } = useGlobal();
 
   if (data && data.length) {
@@ -55,17 +56,19 @@ const Columns = () => {
           cursor: "initial",
         }}
       >
-        <div className="createBoardBtn">
-          <p>This board is empty. Create a new column to get started.</p>
-          <button
-            onClick={() => {
-              setIsModalOn(true);
-              setModalNameToActivate("Add New Board");
-            }}
-          >
-            <span>+</span> Create New Board
-          </button>
-        </div>
+        {!loading && (
+          <div className="createBoardBtn">
+            <p>This board is empty. Create a new column to get started.</p>
+            <button
+              onClick={() => {
+                setIsModalOn(true);
+                setModalNameToActivate("Add New Board");
+              }}
+            >
+              <span>+</span> Create New Board
+            </button>
+          </div>
+        )}
       </section>
     );
   }
